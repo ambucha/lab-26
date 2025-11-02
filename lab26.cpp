@@ -20,14 +20,27 @@ const int DATA = 3;
 const int SIZE = 20000; 
 const int width = 12;
 
+// i need to add some variables for the operator and data structure indices, so im not just typing diret numbers in the main
+const int READ = 0;
+const int SORT = 1;
+const int INSERT = 2;
+const int DELETE = 3;
 
+const int VEC = 0;
+const int LIST = 1;
+const int SET = 2;
+
+// set up a designated const int for the sum index
+const int SUM = 15;
 
 int main() {
     // 3d array for results
     // first is the runs, which is +1 because i have the fifteen runs, and then in the last i will store the sum
     // second is the number of different operators
     // third is number of different data structures
-    int results[RUNS + 1][OP][DATA] = {0};
+
+    // i think i need this variable to be long long for the duration_cast 
+    long long results[RUNS + 1][OP][DATA] = {0};
 
     // set up the loop to run each operation 15 times
     for(int i = 0; i < RUNS;i++){
@@ -48,7 +61,10 @@ int main() {
         auto end = high_resolution_clock::now();
 
         // add the variable for vectorRead time in microseconds
-        results[i][][] = duration_cast<microseconds>(end - start);
+        // nevermind i j needed to make this a .count()
+        results[i][READ][VEC] = duration_cast<microseconds>(end - start).count();
+        // add the new result to the sum of results
+        results[SUM][READ][VEC] += results[i][READ][VEC];
 
         // now read for the list
         start = high_resolution_clock::now();
@@ -62,7 +78,8 @@ int main() {
 
         end = high_resolution_clock::now();
         // add the variable for listRead time in microseconds
-        auto listRead = duration_cast<microseconds>(end - start);
+        results[i][READ][LIST] = duration_cast<microseconds>(end - start).count();
+        results[SUM][READ][LIST] += results[i][READ][LIST];
 
         // now read for the set
         start = high_resolution_clock::now();
@@ -76,7 +93,8 @@ int main() {
 
         end = high_resolution_clock::now();
         // add the variable for setRead time in microseconds
-        auto setRead = duration_cast<microseconds>(end - start);
+        results[i][READ][SET] = duration_cast<microseconds>(end - start).count();
+        results[SUM][READ][SET] += results[i][READ][SET];
 
         // sorting time
         start = high_resolution_clock::now();
