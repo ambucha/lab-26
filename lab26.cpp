@@ -189,11 +189,13 @@ int main() {
         end = high_resolution_clock::now();
         results[i][DELETE][SET] = duration_cast<microseconds>(end - start).count();
         results[SUM][DELETE][SET] += results[i][DELETE][SET];
+
+        // take out the nominal testing for  the final commits
     }
 
     
     // displays now using the arrays instead of the variables i had prev
-    // make the output look like the sample
+    // make the output look like the sample (really just adding the number of simulations line)
     cout << "Number of Simulations: " << RUNS <<  endl;
     cout << right << setw(width) << "Operation" << setw(width) << "Vector" << setw(width) << "List" << setw(width) << "Set" << endl;
     cout << right << setw(width) << "Read" << setw(width) << results[SUM][READ][VEC] / RUNS << setw(width) << results[SUM][READ][LIST] / RUNS << setw(width) << results[SUM][READ][SET] / RUNS << endl;
