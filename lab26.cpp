@@ -147,7 +147,8 @@ int main() {
         // just insert the test in it will sort for you, cant put it in the middle
         s.insert(test);
         end = high_resolution_clock::now();
-        auto setInsert = duration_cast<microseconds>(end - start);
+        results[i][INSERT][SET] = duration_cast<microseconds>(end - start).count();
+        results[SUM][INSERT][SET] += results[i][INSERT][SET];
 
         // deleting time
         start = high_resolution_clock::now();
@@ -155,7 +156,8 @@ int main() {
         // delete the middle ish element in the vector
         v.erase(v.begin() + (v.size() / 2));
         end = high_resolution_clock::now();
-        auto vectorDelete = duration_cast<microseconds>(end - start);
+        results[i][DELETE][VEC] = duration_cast<microseconds>(end - start).count();
+        results[SUM][DELETE][VEC] += results[i][DELETE][VEC];
 
         // list deleting
         start = high_resolution_clock::now();
@@ -169,7 +171,8 @@ int main() {
         l.erase(it);
         
         end = high_resolution_clock::now();
-        auto listDelete = duration_cast<microseconds>(end - start);
+        results[i][DELETE][LIST] = duration_cast<microseconds>(end - start).count();
+        results[SUM][DELETE][LIST] += results[i][DELETE][LIST];
 
         //set delete
         start = high_resolution_clock::now();
@@ -184,15 +187,17 @@ int main() {
         s.erase(itS);
 
         end = high_resolution_clock::now();
-        auto setDelete = duration_cast<microseconds>(end - start);
+        results[i][DELETE][SET] = duration_cast<microseconds>(end - start).count();
+        results[SUM][DELETE][SET] += results[i][DELETE][SET];
     }
 
-    // displays
+    
+    // displays now using the arrays instead of the variables i had prev
     cout << right << setw(width) << "Operation" << setw(width) << "Vector" << setw(width) << "List" << setw(width) << "Set" << endl;
-    cout << right << setw(width) << "Read" << setw(width) << vectorRead.count() << setw(width) << listRead.count() << setw(width) << setRead.count() << endl;
-    cout << right << setw(width) << "Sort" << setw(width) << vectorSort.count() << setw(width) << listSort.count() << setw(width) << setSort << endl;
-    cout << right << setw(width) << "Insert" << setw(width) << vectorInsert.count() << setw(width) << listInsert.count() << setw(width) << setInsert.count() << endl;
-    cout << right << setw(width) << "Delete" << setw(width) << vectorDelete.count() << setw(width) << listDelete.count() << setw(width) << setDelete.count() << endl;
+    cout << right << setw(width) << "Read" << setw(width) << results[SUM][READ][VEC] / RUNS << setw(width) << results[SUM][READ][LIST] / RUNS << setw(width) << results[SUM][READ][SET] / RUNS << endl;
+    cout << right << setw(width) << "Sort" << setw(width) << results[SUM][SORT][VEC] / RUNS << setw(width) << results[SUM][SORT][LIST] / RUNS << setw(width) << results[SUM][SORT][SET] / RUNS << endl;
+    cout << right << setw(width) << "Insert" << setw(width) << results[SUM][INSERT][VEC] / RUNS << setw(width) << results[SUM][INSERT][LIST] / RUNS << setw(width) << results[SUM][INSERT][SET] / RUNS << endl;
+    cout << right << setw(width) << "Delete" << setw(width) << results[SUM][DELETE][VEC] / RUNS << setw(width) << results[SUM][DELETE][LIST] / RUNS << setw(width) << results[SUM][DELETE][SET] / RUNS << endl;
 
     return 0;
 }
