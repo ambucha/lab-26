@@ -102,16 +102,19 @@ int main() {
         // just use sort for vector sorting
         sort(v.begin(), v.end());
         end = high_resolution_clock::now();
-        auto vectorSort = duration_cast<microseconds>(end - start);
+        results[i][SORT][VEC] = duration_cast<microseconds>(end - start).count();
+        results[SUM][SORT][VEC] += results[i][SORT][VEC];
 
         // list sorting time
         start = high_resolution_clock::now();
         l.sort();
         end = high_resolution_clock::now();
-        auto listSort = duration_cast<microseconds>(end - start);
+        results[i][SORT][LIST] = duration_cast<microseconds>(end - start).count();
+        results[SUM][SORT][LIST] += results[i][SORT][LIST];
 
         // just set the set sort to -1 since its auto sorted
-        int setSort = -1;
+        results[i][SORT][SET] = -1;
+        results[SUM][SORT][SET] += results[i][SORT][SET];
 
         string test = "69lol";
 
@@ -119,7 +122,8 @@ int main() {
         // i need to insert it into the middle of the vector
         v.insert(v.begin() + (v.size() / 2), test);
         end = high_resolution_clock::now();
-        auto vectorInsert = duration_cast<microseconds>(end - start);
+        results[i][INSERT][VEC] = duration_cast<microseconds>(end - start).count();
+        results[SUM][INSERT][VEC] += results[i][INSERT][VEC];
 
         //list insert time
         start = high_resolution_clock::now();
@@ -134,7 +138,8 @@ int main() {
         // insert in the mid point
         l.insert(it, test);
         end = high_resolution_clock::now();
-        auto listInsert = duration_cast<microseconds>(end - start);
+        results[i][INSERT][LIST] = duration_cast<microseconds>(end - start).count();
+        results[SUM][INSERT][LIST] += results[i][INSERT][LIST];
 
         // set insert now
         start = high_resolution_clock::now();
