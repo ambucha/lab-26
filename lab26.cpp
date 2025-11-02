@@ -189,17 +189,12 @@ int main() {
         end = high_resolution_clock::now();
         results[i][DELETE][SET] = duration_cast<microseconds>(end - start).count();
         results[SUM][DELETE][SET] += results[i][DELETE][SET];
-
-        // output the run was complete and then some values to make sure it is all working well (nominal output for testing)
-        cout << "Run " << i + 1 << " done" << endl;
-        cout << "Insert - Set : " << results[i][INSERT][SET] << endl;
-        cout << "Sum of Vector Reads :  " << results[SUM][READ][VEC] << endl;
-        cout << "Delete - List : " << results[i][DELETE][LIST] << endl;
-        cout << "Sort - Vector : " << results[i][SORT][VEC] << endl << endl;
     }
 
     
     // displays now using the arrays instead of the variables i had prev
+    // make the output look like the sample
+    cout << "Number of Simulations: " << RUNS <<  endl;
     cout << right << setw(width) << "Operation" << setw(width) << "Vector" << setw(width) << "List" << setw(width) << "Set" << endl;
     cout << right << setw(width) << "Read" << setw(width) << results[SUM][READ][VEC] / RUNS << setw(width) << results[SUM][READ][LIST] / RUNS << setw(width) << results[SUM][READ][SET] / RUNS << endl;
     cout << right << setw(width) << "Sort" << setw(width) << results[SUM][SORT][VEC] / RUNS << setw(width) << results[SUM][SORT][LIST] / RUNS << setw(width) << results[SUM][SORT][SET] / RUNS << endl;
